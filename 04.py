@@ -75,6 +75,11 @@ def play_bingo(lines):
 
 
 if __name__ == "__main__":
+    file_path = "input_files/04_test.txt"
+    assert play_bingo(read_lines(file_path))[0] == 4512
+    assert play_bingo(read_lines(file_path))[-1] == 1924
+    print(f"Tests passed")
+
     file_path = "input_files/04.txt"
     print(f"Answer Part 1: {play_bingo(read_lines(file_path))[0]}")
     print(f"Answer Part 2: {play_bingo(read_lines(file_path))[-1]}")

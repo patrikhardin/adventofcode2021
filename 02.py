@@ -1,5 +1,5 @@
-def read_lines():
-    with open("input_files/02.txt", "r", encoding="utf-8") as f:
+def read_lines(file_path):
+    with open(file_path, "r", encoding="utf-8") as f:
         lines = [line.rstrip() for line in f.readlines()]
     directions = [line.split()[0] for line in lines]
     distances = [int(line.split()[1]) for line in lines]
@@ -32,6 +32,11 @@ def part_2(directions, distances):
 
 
 if __name__ == "__main__":
-    dirs, dists = read_lines()
-    print(f"Answer Part 1: {part_1(dirs, dists)}")
-    print(f"Answer Part 2: {part_2(dirs, dists)}")
+    file_path = "input_files/02_test.txt"
+    assert part_1(*read_lines(file_path)) == 150
+    assert part_2(*read_lines(file_path)) == 900
+    print(f"Tests passed")
+
+    file_path = "input_files/02.txt"
+    print(f"Answer Part 1: {part_1(*read_lines(file_path))}")
+    print(f"Answer Part 2: {part_2(*read_lines(file_path))}")

@@ -1,5 +1,5 @@
-def read_lines():
-    with open("input_files/01.txt", "r", encoding="utf-8") as f:
+def read_lines(file_path):
+    with open(file_path, "r", encoding="utf-8") as f:
         lines = [int(line.rstrip()) for line in f.readlines()]
     return lines
 
@@ -17,5 +17,11 @@ def part_2(lines):
 
 
 if __name__ == "__main__":
-    print(f"Answer Part 1: {part_1(read_lines())}")
-    print(f"Answer Part 2: {part_2(read_lines())}")
+    file_path = "input_files/01_test.txt"
+    assert part_1(read_lines(file_path)) == 7
+    assert part_2(read_lines(file_path)) == 5
+    print(f"Tests passed")
+
+    file_path = "input_files/01.txt"
+    print(f"Answer Part 1: {part_1(read_lines(file_path))}")
+    print(f"Answer Part 2: {part_2(read_lines(file_path))}")
