@@ -5,13 +5,8 @@ def read_lines(file_path):
 
 
 def most_common(lst):
-    """Return the most common element. If equal, then return 1
-    """
-    if sum(lst) / len(lst) >= 0.5:
-        return 1
-    else:
-        return 0
-
+    """Return the most common element. If equal, then return 1"""
+    return int(sum(lst) / len(lst) >= 0.5)
 
 def concatenate(list_of_ints):
     list_of_strings = [str(i) for i in list_of_ints]
@@ -21,7 +16,7 @@ def concatenate(list_of_ints):
 def generate_gamma_epsilon_rates(lines):
     gamma_rate = []
     epsilon_rate = []
-    for i in range(bits):
+    for i in range(BITS):
         column_i = [int(line[i]) for line in lines]
         gamma_rate.append(most_common(column_i))
         epsilon_rate.append(1 - most_common(column_i))
@@ -36,8 +31,7 @@ def part_1(lines):
 
 
 def remove_bad_lines(lines, gamma, pos):
-    """Read lines and removes rows which do not correspond to the comparison list in the given pos
-    """
+    """Read lines and removes rows which do not correspond to the comparison list in the given pos"""
     gamma_rate, epsilon_rate = generate_gamma_epsilon_rates(lines)
     if gamma:
         comparison_list = gamma_rate
@@ -54,29 +48,29 @@ def remove_bad_lines(lines, gamma, pos):
     return lines
 
 
+def repeated_remove_bad_lines(lines, gamma):
+    lns = lines.copy()
+    for i in range(BITS):
+        if len(lns) > 1:
+            lns = remove_bad_lines(lns, gamma, i)
+    return lns
+
+
 def part_2(lines):
-    co2_lines = lines.copy()
-    o2_lines = lines.copy()
+    lines_most_freq = repeated_remove_bad_lines(lines, True)
+    lines_least_freq = repeated_remove_bad_lines(lines, False)
 
-    for i in range(bits):
-        if len(co2_lines) > 1:
-            co2_lines = remove_bad_lines(co2_lines, True, i)
-
-    for i in range(bits):
-        if len(o2_lines) > 1:
-            o2_lines = remove_bad_lines(o2_lines, False, i)
-
-    return int(concatenate(co2_lines), 2) * int(concatenate(o2_lines), 2)
+    return int(concatenate(lines_most_freq), 2) * int(concatenate(lines_least_freq), 2)
 
 
 if __name__ == "__main__":
-    bits = 5
+    BITS = 5
     file_path = "input_files/03_test.txt"
     assert part_1(read_lines(file_path)) == 198
     assert part_2(read_lines(file_path)) == 230
     print(f"Tests passed")
 
-    bits = 12
+    BITS = 12
     file_path = "input_files/03.txt"
     print(f"Answer Part 1: {part_1(read_lines(file_path))}")
     print(f"Answer Part 2: {part_2(read_lines(file_path))}")
